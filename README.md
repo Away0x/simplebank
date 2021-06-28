@@ -21,6 +21,7 @@ docker start/stop postgres12
 ```bash
 # 进入 postgres (该容器默认在本地设置了信任身份验证，所以 localhost 连接时不需要密码)
 docker exec -it postgres12 psql -U root
+docker exec -it postgres12 psql -U root -d demodb # 指定数据库
 # shell
 docker exec -it postgres12 /bin/sh
 
