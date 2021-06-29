@@ -48,6 +48,6 @@ server:
 
 # Generate DB mock with gomock
 mock:
-	mockgen -package mockdb -destination db/mock/store.go github.com/techschool/simplebank/db/sqlc Store
+	mockgen -package mockdb -destination db/mock/store.go simplebank Store
 
 .PHONY: postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 sqlc test server mock
