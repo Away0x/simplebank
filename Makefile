@@ -15,6 +15,8 @@ dropdb:
 	docker exec -it postgres12 dropdb simple_bank
 
 # Create a new db migration. eg. "make migration name=init_schema"
+# https://github.com/golang-migrate/migrate
+# brew install golang-migrate
 migration:
 	migrate create -ext sql -dir db/migration -seq $(name)
 
@@ -35,6 +37,8 @@ migratedown1:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
 # Generate SQL CRUD with sqlc
+# https://github.com/kyleconroy/sqlc
+# brew install sqlc
 sqlc:
 	sqlc generate
 
@@ -43,11 +47,15 @@ test:
 	go test -v -cover ./...
 
 # Run server
+# SERVER_ADDRESS=0.0.0.0:8081 make server
 server:
 	go run main.go
 
 # Generate DB mock with gomock
+# https://github.com/golang/mock
+# go install github.com/golang/mock/mockgen@v1.6.0
+# mock simplebank package 下的 Store interface 到 db/mock/store.go
 mock:
-	mockgen -package mockdb -destination db/mock/store.go simplebank Store
+	mockgen -package=mockdb -destination=db/mock/store.go simplebank/db/sqlc Store
 
 .PHONY: postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 sqlc test server mock

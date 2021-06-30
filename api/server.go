@@ -12,12 +12,12 @@ import (
 // Server serves HTTP requests for our banking service.
 type Server struct {
 	config util.Config
-	store  *db.Store
+	store  db.Store
 	router *gin.Engine
 }
 
 // NewServer creates a new HTTP server and set up routing.
-func NewServer(config util.Config, store *db.Store) (*Server, error) {
+func NewServer(config util.Config, store db.Store) (*Server, error) {
 	server := &Server{
 		config: config,
 		store:  store,
@@ -35,6 +35,8 @@ func (server *Server) setupRouter() {
 	router := gin.Default()
 
 	router.POST("/accounts", server.createAccount)
+	router.GET("/accounts/:id", server.getAccount)
+	router.GET("/accounts", server.listAccounts)
 
 	server.router = router
 }
