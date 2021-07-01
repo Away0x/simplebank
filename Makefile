@@ -36,6 +36,17 @@ migratedown:
 migratedown1:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
+# Run db migration rollback version
+# up 时如果报错，导致迁移失败，其不会更改数据表，但是 schema_migrations version 提升，dirty=True
+# 此时需要回退版本
+# 1. migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose force 2
+#    force 后跟 dirty=True 出错的这个 version
+# 2. make migratedown1 回退版本
+# 这里合并了以上命令，使用时需: make migraterollback version=2
+migraterollback:
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose force $(version) \
+	& make migratedown1
+
 # Generate SQL CRUD with sqlc
 # https://github.com/kyleconroy/sqlc
 # brew install sqlc
@@ -58,4 +69,4 @@ server:
 mock:
 	mockgen -package=mockdb -destination=db/mock/store.go simplebank/db/sqlc Store
 
-.PHONY: postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 sqlc test server mock
+.PHONY: postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test server mock
