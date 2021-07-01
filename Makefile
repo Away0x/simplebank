@@ -58,6 +58,11 @@ test:
 	go test -v -cover ./...
 
 # Run server
+# go install -u github.com/cosmtrek/air
+dev:
+	air -c air.toml
+
+# Run server
 # SERVER_ADDRESS=0.0.0.0:8081 make server
 server:
 	go run main.go
@@ -69,4 +74,4 @@ server:
 mock:
 	mockgen -package=mockdb -destination=db/mock/store.go simplebank/db/sqlc Store
 
-.PHONY: postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test server mock
+.PHONY: postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test dev server mock
