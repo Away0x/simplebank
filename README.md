@@ -76,7 +76,7 @@ func TestGetAccountAPI(t *testing.T) {
 	store := mockdb.NewMockStore(ctrl)
 
 	// build stubs
-	// 期望 store 的 GetAccount 在请求接口中被调用一次，指定其被调用时接收的参数和返回值
+	// 期望 store 的 GetAccount 在请求接口中被调用一次，检测其被调用时接收的参数和 mock 返回值
 	// 如果接口逻辑中没有调用 store 的 GetAccount 方法，则测试会报错
 	store.EXPECT().
 		GetAccount(gomock.Any(), gomock.Eq(account.ID)).
