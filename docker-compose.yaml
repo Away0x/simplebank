@@ -11,10 +11,25 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
+      # 绑定 8080 端口到宿主机，这样宿主机即可通过该端口访问容器的服务
       - "8080:8080"
     environment:
+      # 会被 viper 读取，从而覆盖 app.env 里面定义的环境变量
       - DB_SOURCE=postgresql://root:secret@postgres:5432/simple_bank?sslmode=disable
+      - GIN_MODE=release
     depends_on:
       - postgres
+    # 下面的 entrypoint、command 会覆盖 Dockerfile 的 ENTRYPOINT 和 CMD
+    # - 因为要运行迁移，所以需要先等待 postgres 就绪，然后执行 start.sh 脚本，并将 command(/app/main) 作为参数传入脚本
+    # - postgres 服务器需要等待一段时间才会准备好，所以需要 wait-for.sh 等待 postgres 启动完成后再执行 start.sh
+    #   详见文档: https://docs.docker.com/compose/startup-order/ https://github.com/Eficode/wait-for
     entrypoint: [ "/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh" ]
     command: [ "/app/main" ]
+
+# docker componse 会自动创建一个叫 simplebank_default 的 network, 并且该文件创建的 container 会自动连接到这个 network 中
+# 所以配置里面可以直接通过 name 连接到对应 container
+
+# 重新构建
+# docker compose down
+# docker rmi simplebank_api
+# docker compose up

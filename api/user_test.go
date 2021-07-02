@@ -189,8 +189,7 @@ func TestCreateUserAPI(t *testing.T) {
 			require.NoError(t, err)
 
 			url := "/users"
-			request, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))
-			require.NoError(t, err)
+			request := httptest.NewRequest(http.MethodPost, url, bytes.NewReader(data))
 
 			server.router.ServeHTTP(recorder, request)
 			tc.checkResponse(recorder)
@@ -308,8 +307,7 @@ func TestLoginUserAPI(t *testing.T) {
 			require.NoError(t, err)
 
 			url := "/users/login"
-			request, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))
-			require.NoError(t, err)
+			request := httptest.NewRequest(http.MethodPost, url, bytes.NewReader(data))
 
 			server.router.ServeHTTP(recorder, request)
 			tc.checkResponse(recorder)

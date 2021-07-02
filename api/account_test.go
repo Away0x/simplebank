@@ -140,8 +140,7 @@ func TestGetAccountAPI(t *testing.T) {
 			recorder := httptest.NewRecorder()
 
 			url := fmt.Sprintf("/accounts/%d", tc.accountID)
-			request, err := http.NewRequest(http.MethodGet, url, nil)
-			require.NoError(t, err)
+			request := httptest.NewRequest(http.MethodGet, url, nil)
 
 			tc.setupAuth(t, request, server.tokenMaker)
 			server.router.ServeHTTP(recorder, request)
@@ -257,8 +256,7 @@ func TestCreateAccountAPI(t *testing.T) {
 			require.NoError(t, err)
 
 			url := "/accounts"
-			request, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))
-			require.NoError(t, err)
+			request := httptest.NewRequest(http.MethodPost, url, bytes.NewReader(data))
 
 			tc.setupAuth(t, request, server.tokenMaker)
 			server.router.ServeHTTP(recorder, request)
@@ -402,8 +400,7 @@ func TestListAccountsAPI(t *testing.T) {
 			recorder := httptest.NewRecorder()
 
 			url := "/accounts"
-			request, err := http.NewRequest(http.MethodGet, url, nil)
-			require.NoError(t, err)
+			request := httptest.NewRequest(http.MethodGet, url, nil)
 
 			// Add query parameters to request URL
 			q := request.URL.Query()

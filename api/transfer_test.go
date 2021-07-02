@@ -281,8 +281,7 @@ func TestTransferAPI(t *testing.T) {
 			require.NoError(t, err)
 
 			url := "/transfers"
-			request, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))
-			require.NoError(t, err)
+			request := httptest.NewRequest(http.MethodPost, url, bytes.NewReader(data))
 
 			tc.setupAuth(t, request, server.tokenMaker)
 			server.router.ServeHTTP(recorder, request)

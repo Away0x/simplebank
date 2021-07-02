@@ -94,8 +94,7 @@ func TestAuthMiddleware(t *testing.T) {
 			)
 
 			recorder := httptest.NewRecorder()
-			request, err := http.NewRequest(http.MethodGet, authPath, nil)
-			require.NoError(t, err)
+			request := httptest.NewRequest(http.MethodGet, authPath, nil)
 
 			tc.setupAuth(t, request, server.tokenMaker)
 			server.router.ServeHTTP(recorder, request)

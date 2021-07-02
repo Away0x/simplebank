@@ -88,8 +88,7 @@ func TestGetAccountAPI(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	url := fmt.Sprintf("/accounts/%d", account.ID)
-	request, err := http.NewRequest(http.MethodGet, url, nil)
-	require.NoError(t, err)
+	request := httptest.NewRequest(http.MethodGet, url, nil)
 
 	server.router.ServeHTTP(recorder, request)
 
