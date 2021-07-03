@@ -1,0 +1,30 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Login to Aliyun ACR
+      uses: aliyun/acr-login@v1
+      with:
+        login-server: https://registry.cn-hangzhou.aliyuncs.com
+        username: "${{ secrets.REGISTRY_USERNAME }}"
+        password: "${{ secrets.REGISTRY_PASSWORD }}"
+    - name: Build and push image to Aliyun ACR
+      env:
+        ACR_REGISTRY: registry.cn-hangzhou.aliyuncs.com/away0x
+        ACR_REPOSITORY: simplebank
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG .
+        docker push $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG
