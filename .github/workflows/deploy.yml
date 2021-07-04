@@ -23,7 +23,13 @@ jobs:
     
     - name: Load secrets and save to app.env
       # jq 已经在 ubuntu-latest 里面预装了
-      run: aliyun kms GetSecretValue --SecretName simplebank | jq -r '.SecretData|fromjson|to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+      run: |
+        curl -L https://github.com/aliyun/aliyun-cli/releases/download/v3.0.80/aliyun-cli-linux-3.0.80-amd64.tgz | tar xvz
+        ./aliyun configure set --profile akProfile --mode AK --region cn-hangzhou --access-key-id $ALIYUN_ACCESS_KEY --access-key-secret $ALIYUN_ACCESS_SECRET
+        ./aliyun kms GetSecretValue --SecretName simplebank | jq -r '.SecretData|fromjson|to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+      with:
+        ALIYUN_ACCESS_KEY: ${{ secrets.ALIYUN_ACCESS_KEY }}
+        ALIYUN_ACCESS_SECRET: ${{ secrets.ALIYUN_ACCESS_SECRET }}
 
     - name: Build and push image to Aliyun ACR
       env:
