@@ -30,8 +30,6 @@ jobs:
         curl -L https://github.com/aliyun/aliyun-cli/releases/download/v3.0.80/aliyun-cli-linux-3.0.80-amd64.tgz | tar xvz
         ./aliyun configure set --profile akProfile --mode AK --region cn-hangzhou --access-key-id $ALIYUN_ACCESS_KEY --access-key-secret $ALIYUN_ACCESS_SECRET
         ./aliyun kms GetSecretValue --SecretName simplebank | jq -r '.SecretData|fromjson|to_entries|map("\(.key)=\(.value)")|.[]' > app.env
-        echo ./aliyun kms GetSecretValue --SecretName simplebank 
-        cat app.env
 
     - name: Build and push image to Aliyun ACR
       env:
