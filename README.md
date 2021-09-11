@@ -1,6 +1,12 @@
 # 学习 [Backend master class [Golang, Postgres, Docker]](https://www.youtube.com/playlist?list=PLy_6D98if3ULEtXtNSY_2qN21VCKgoQAE) 课程的相关代码
 > [techschool]https://github.com/techschool/simplebank
 
+## Docker
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/away0x/simplebank:3551c6e31fa2d8e718940cb0f935ce6feac915c6
+docker run -p 8080:8080 registry.cn-hangzhou.aliyuncs.com/away0x/simplebank:3551c6e31fa2d8e718940cb0f935ce6feac915c6
+```
+
 ## Postgres
 > [Image](https://hub.docker.com/_/postgres)
 
