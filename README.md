@@ -1,6 +1,24 @@
 # 学习 [Backend master class [Golang, Postgres, Docker]](https://www.youtube.com/playlist?list=PLy_6D98if3ULEtXtNSY_2qN21VCKgoQAE) 课程的相关代码
 > [techschool]https://github.com/techschool/simplebank
 
+# 初始化项目
+```bash
+# install
+brew install golang-migrate
+brew install sqlc
+go install github.com/golang/mock/mockgen@v1.6.0
+# setup
+make network
+make postgres
+make createdb
+make migrateup
+make test
+make server
+
+# docker-compose
+docker compose up
+```
+
 ## Docker
 ```bash
 docker pull registry.cn-hangzhou.aliyuncs.com/away0x/simplebank:3551c6e31fa2d8e718940cb0f935ce6feac915c6

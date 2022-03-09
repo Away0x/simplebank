@@ -1,0 +1,6 @@
+### refresh token
+POST {{host}}/tokens/renew_access
+
+{
+    "refresh_token": "{{refresh_token}}"
+}

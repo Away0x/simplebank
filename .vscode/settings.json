@@ -1,0 +1,18 @@
+{
+    "rest-client.defaultHeaders": {
+        "User-Agent": "vscode-restclient",
+        "Content-type": "application/json",
+    },
+    "rest-client.environmentVariables": {
+        "$shared": {},
+        "local": {
+            "host": "http://localhost:8080",
+            "username": "wt",
+            "password": "12345678",
+            "full_name": "wutong",
+            "email": "away0x@gmail.com",
+            "token": "v2.local.1ofro-EMu0X-U7lBsCEld6aOTkJKw67P-i73YxGlhsJjMDfoQtI5UPw3LvVeJyNQgTedAXJrsc94YQhX9aF0-IVYvPq-gUKzvw9n9vn6-mjiLrRh-6SzVzxuG0l-DvzVzKi5yzgFRBKULWuEJ2MhOXTHzrt3l88nnJok6L8vYbE4KmAwDkUFJU50LKKPheO5vk84IMTKQgc8AAy9MRR1Qid4t4whU9ySE6b-NaCcENoQDkNU8GLZ9YMhchr05RYwN2E.bnVsbA",
+            "refresh_token": "v2.local.Ja9U99brYN77lJIJaV9RPnjZiCV9FRT0b_fXqdH6gIEBgetrLlNC1FOkQ9YEkGDQdw3Z5rjKQdxN9Dkqsn_oqfrlPm7bXKJ0vtoWZs9-FVxhVG8cUw3_69_AYoXGFULNf-SehhaTAMwrQKDrN1iOPrni6AUSoz--d9yw6A9_e5q7jPIX3ujAOfun5Uf_tPmDWCNfjUq52yrx3xeJC1DMovdn4iIzrm0sZVtVmZU1IPJiyfmLAQ_3OskpaJVFqTITZHJZ_w.bnVsbA"
+        }
+    }
+}

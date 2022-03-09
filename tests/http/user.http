@@ -1,0 +1,18 @@
+### Create user
+POST {{host}}/users
+
+{
+    "username": "{{username}}",
+    "password": "{{password}}",
+    "full_name": "{{full_name}}",
+    "email": "{{email}}"
+}
+
+### create session: get access and refresh token
+POST {{host}}/users/login
+
+{
+    "username": "{{username}}",
+    "password": "{{password}}"
+}
+

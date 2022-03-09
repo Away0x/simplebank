@@ -1,0 +1,15 @@
+### create account
+POST {{host}}/accounts
+Authorization: Bearer {{token}}
+
+{
+    "currency": "CNY"
+}
+
+### get account
+GET {{host}}/accounts/84
+Authorization: Bearer {{token}}
+
+### get accounts
+GET {{host}}/accounts?page_id=1&page_size=10
+Authorization: Bearer {{token}}

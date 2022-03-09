@@ -1,3 +1,6 @@
+network:
+	docker network create bank-network
+
 # Start postgres container
 postgres:
 	docker run --name postgres12 --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
@@ -54,8 +57,9 @@ sqlc:
 	sqlc generate
 
 # Run test
+# 查看测试覆盖率 go tool cover -html=coverprofile.out
 test:
-	go test -v -cover ./...
+	go test -v -cover -covermode=count -coverprofile=coverprofile.out ./...
 
 # Run server
 # go install -u github.com/cosmtrek/air
@@ -74,4 +78,4 @@ server:
 mock:
 	mockgen -package=mockdb -destination=db/mock/store.go simplebank/db/sqlc Store
 
-.PHONY: postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test dev server mock
+.PHONY: network postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test dev server mock

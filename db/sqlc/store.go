@@ -35,7 +35,8 @@ func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) erro
 		return err
 	}
 
-	q := New(tx)
+	q := store.Queries.WithTx(tx)
+	// q := New(tx)
 	err = fn(q)
 
 	if err != nil {
