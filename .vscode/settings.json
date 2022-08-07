@@ -1,4 +1,9 @@
 {
+    "protoc": {
+        "options": [
+            "--proto_path=proto"
+        ]
+    },
     "rest-client.defaultHeaders": {
         "User-Agent": "vscode-restclient",
         "Content-type": "application/json",
@@ -7,11 +12,11 @@
         "$shared": {},
         "local": {
             "host": "http://localhost:8080",
-            "username": "wt",
+            "username": "wutong",
             "password": "12345678",
             "full_name": "wutong",
             "email": "away0x@gmail.com",
-            "token": "v2.local.1ofro-EMu0X-U7lBsCEld6aOTkJKw67P-i73YxGlhsJjMDfoQtI5UPw3LvVeJyNQgTedAXJrsc94YQhX9aF0-IVYvPq-gUKzvw9n9vn6-mjiLrRh-6SzVzxuG0l-DvzVzKi5yzgFRBKULWuEJ2MhOXTHzrt3l88nnJok6L8vYbE4KmAwDkUFJU50LKKPheO5vk84IMTKQgc8AAy9MRR1Qid4t4whU9ySE6b-NaCcENoQDkNU8GLZ9YMhchr05RYwN2E.bnVsbA",
+            "token": "v2.local.OxxX7C971bhdqQacLVutCQhBeVtfgSG_fzqAoy9Ed0ccA9kkDZXTVXaCHVWUnLqwPssuP4b3H09o6EcE1KJZXr5UPR_lZzyt7728XD25Bvp8GEsEnLf3P1lrxuLTs-hYCe0tqR6RlyF7Zd4s_uCoLt3Kps25_l0ixC6YWqDdOmcDR9KjVmD7AUWBFwbnUsEG4tn6uL1OhVi-bj_2b2AhNO19-8_0cm8XEjcj34oggTps2pMXDG4tXRNyp8_ZC1iHgOKvxQ.bnVsbA",
             "refresh_token": "v2.local.Ja9U99brYN77lJIJaV9RPnjZiCV9FRT0b_fXqdH6gIEBgetrLlNC1FOkQ9YEkGDQdw3Z5rjKQdxN9Dkqsn_oqfrlPm7bXKJ0vtoWZs9-FVxhVG8cUw3_69_AYoXGFULNf-SehhaTAMwrQKDrN1iOPrni6AUSoz--d9yw6A9_e5q7jPIX3ujAOfun5Uf_tPmDWCNfjUq52yrx3xeJC1DMovdn4iIzrm0sZVtVmZU1IPJiyfmLAQ_3OskpaJVFqTITZHJZ_w.bnVsbA"
         }
     }

@@ -6,6 +6,8 @@
 # install
 brew install golang-migrate
 brew install sqlc
+brew install protobuf
+go install github.com/rakyll/statik # Embed files into a Go executable
 go install github.com/golang/mock/mockgen@v1.6.0
 # setup
 make network
@@ -132,3 +134,38 @@ func requireBodyMatchAccount(t *testing.T, body *bytes.Buffer, account db.Accoun
 	require.Equal(t, account, gotAccount)
 }
 ```
+
+## DBML
+> https://dbdocs.io/
+
+```bash
+npm install -g dbdocs
+npm install -g @dbml/cli
+dbml2sql --version
+```
+
+## GRPC
+```bash
+brew install protobuf
+protoc --version
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+protoc-gen-go --version
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+protoc-gen-go-grpc --version
+```
+```bash
+# grpc client
+# https://github.com/ktr0731/evans
+brew tap ktr0731/evans
+brew install evans
+
+# e.g.
+show service
+call CreateUser
+```
+
+### gRPC Gateway (grpc -> http)
+> https://github.com/grpc-ecosystem/grpc-gateway
+
+
+

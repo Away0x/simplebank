@@ -7,7 +7,7 @@ Authorization: Bearer {{token}}
 }
 
 ### get account
-GET {{host}}/accounts/84
+GET {{host}}/accounts/28
 Authorization: Bearer {{token}}
 
 ### get accounts

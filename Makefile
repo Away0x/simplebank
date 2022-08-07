@@ -1,3 +1,5 @@
+DB_URL=postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable
+
 network:
 	docker network create bank-network
 
@@ -25,29 +27,29 @@ migration:
 
 # Run db migration up all versions
 migrateup:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "${DB_URL}" -verbose up
 
 # Run db migration up 1 version
 migrateup1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+	migrate -path db/migration -database "${DB_URL}" -verbose up 1
 
 # Run db migration down all versions
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "${DB_URL}" -verbose down
 
 # Run db migration down 1 version
 migratedown1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
+	migrate -path db/migration -database "${DB_URL}" -verbose down 1
 
 # Run db migration rollback version
 # up 时如果报错，导致迁移失败，其不会更改数据表，但是 schema_migrations version 提升，dirty=True
 # 此时需要回退版本
-# 1. migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose force 2
+# 1. migrate -path db/migration -database "${DB_URL}" -verbose force 2
 #    force 后跟 dirty=True 出错的这个 version
 # 2. make migratedown1 回退版本
 # 这里合并了以上命令，使用时需: make migraterollback version=2
 migraterollback:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose force $(version) \
+	migrate -path db/migration -database "${DB_URL}" -verbose force $(version) \
 	& make migratedown1
 
 # Generate SQL CRUD with sqlc
@@ -78,4 +80,41 @@ server:
 mock:
 	mockgen -package=mockdb -destination=db/mock/store.go simplebank/db/sqlc Store
 
-.PHONY: network postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test dev server mock
+# Generate DB documentation:
+dbdocs:
+	dbdocs build doc/db.dbml
+
+dbschema:
+	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
+
+# proto:
+# 	rm -f pb/*.go
+# 	protoc \
+# 		--proto_path=proto \
+# 		--go_out=pb \
+# 		--go_opt=paths=source_relative \
+# 		--go-grpc_out=pb \
+# 		--go-grpc_opt=paths=source_relative \
+# 		proto/*.proto
+proto:
+	rm -f pb/*.go
+	rm -f doc/swagger/*.swagger.json
+	protoc \
+		--proto_path=proto \
+		--go_out=pb \
+		--go_opt=paths=source_relative \
+		--go-grpc_out=pb \
+		--go-grpc_opt=paths=source_relative \
+		--grpc-gateway_out=pb \
+		--grpc-gateway_opt=paths=source_relative \
+		--openapiv2_opt=allow_merge=true,merge_file_name=simple_bank \
+		--openapiv2_out=doc/swagger \
+		proto/*.proto
+	statik -src=./doc/swagger -dest=./doc
+
+# grpc client
+evans:
+	evans --host localhost --port 9090 -r repl
+
+
+.PHONY: network postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test dev server mock dbdocs dbschema proto evans statik

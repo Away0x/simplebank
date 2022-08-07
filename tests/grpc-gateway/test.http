@@ -1,0 +1,17 @@
+### Create user
+POST {{host}}/v1/create_user
+
+{
+    "username": "wutong",
+    "password": "{{password}}",
+    "full_name": "{{full_name}}",
+    "email": "test@qq.com"
+}
+
+### Login
+POST {{host}}/v1/login_user
+
+{
+    "username": "wutong",
+    "password": "{{password}}"
+}
