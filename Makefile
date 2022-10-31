@@ -52,12 +52,6 @@ migraterollback:
 	migrate -path db/migration -database "${DB_URL}" -verbose force $(version) \
 	& make migratedown1
 
-# Generate SQL CRUD with sqlc
-# https://github.com/kyleconroy/sqlc
-# brew install sqlc
-sqlc:
-	sqlc generate
-
 # Run test
 # 查看测试覆盖率 go tool cover -html=coverprofile.out
 test:
@@ -72,13 +66,6 @@ dev:
 # SERVER_ADDRESS=0.0.0.0:8081 make server
 server:
 	go run main.go
-
-# Generate DB mock with gomock
-# https://github.com/golang/mock
-# go install github.com/golang/mock/mockgen@v1.6.0
-# mock simplebank package 下的 Store interface 到 db/mock/store.go
-mock:
-	mockgen -package=mockdb -destination=db/mock/store.go simplebank/db/sqlc Store
 
 # Generate DB documentation:
 dbdocs:
@@ -116,5 +103,18 @@ proto:
 evans:
 	evans --host localhost --port 9090 -r repl
 
+# 执行 gen.go 里面的生成代码任务
+# 1. Generate SQL CRUD with sqlc
+# https://github.com/kyleconroy/sqlc
+# brew install sqlc
+# 
+# 2. Generate DB mock with gomock
+# https://github.com/golang/mock
+# go install github.com/golang/mock/mockgen@v1.6.0
+# mock simplebank package 下的 Store interface 到 db/mock/store.go
+# mockgen -package=mockdb -destination=db/mock/store.go simplebank/db/sqlc Store
+gen:
+	go generate ./...
 
-.PHONY: network postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback sqlc test dev server mock dbdocs dbschema proto evans statik
+
+.PHONY: network postgres createdb dropdb makemigration migrateup migratedown migrateup1 migratedown1 migraterollback test dev server dbdocs dbschema proto evans statik gen
